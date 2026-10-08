@@ -1,139 +1,91 @@
 /* =========================================================
-   WEDDING WEBSITE CONFIGURATION
+   JUNED & YASMIN — MODERN LUXURY WEDDING
+   script.js
+========================================================= */
+
+
+/* =========================================================
+   01. CONFIGURATION
 ========================================================= */
 
 const CONFIG = {
+
     groomName: "Juned",
+
     brideName: "Yasmin",
 
     weddingDate: "2026-11-29T22:00:00+05:30",
 
     displayDate: "29 November 2026",
+
     displayDayTime: "Sunday • 10:00 PM",
 
     whatsappNumber: "918154957669",
 
     musicFile: "music.mp3"
+
 };
 
 
 /* =========================================================
-   DOM READY
+   02. DOM READY
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    initializeWeddingWebsite();
+    initializeNames();
+
+    initializeOpeningScreen();
+
+    initializeSmoothNavigation();
+
+    initializeCountdown();
+
+    initializeScratchCard();
+
+    initializeGallery();
+
+    initializeRSVP();
+
+    initializeMusic();
+
+    initializeScrollReveal();
+
+    updatePageTitle();
 
 });
 
 
 /* =========================================================
-   INITIALIZE WEBSITE
+   03. INITIALIZE NAMES
 ========================================================= */
 
-function initializeWeddingWebsite() {
+function initializeNames() {
 
-    setupWeddingNames();
+    const nameElements = document.querySelectorAll(
+        "[data-groom], [data-bride]"
+    );
 
-    setupOpeningScreen();
+    nameElements.forEach((element) => {
 
-    setupCountdown();
+        if (element.hasAttribute("data-groom")) {
+            element.textContent = CONFIG.groomName;
+        }
 
-    setupScratchCard();
+        if (element.hasAttribute("data-bride")) {
+            element.textContent = CONFIG.brideName;
+        }
 
-    setupGallery();
-
-    setupRSVP();
-
-    setupMusic();
-
-    setupScrollReveal();
+    });
 
 }
 
 
 /* =========================================================
-   WEDDING NAMES / DATE
+   04. OPENING SCREEN
 ========================================================= */
 
-function setupWeddingNames() {
-
-    /*
-     * The HTML already contains the names and date.
-     * These values are kept here so the main details can
-     * easily be changed from CONFIG in the future.
-     */
-
-    const openingTitle = document.querySelector(".opening-title");
-    const openingDate = document.querySelector(".opening-date");
-
-    const invitationNames =
-        document.querySelector(".invitation-names");
-
-    const invitationDate =
-        document.querySelector(".invitation-date");
-
-    const heroDate =
-        document.querySelector(".hero-date");
-
-    const heroTime =
-        document.querySelector(".hero-time");
-
-    const footerTitle =
-        document.querySelector(".footer h2");
-
-    const footerDate =
-        document.querySelector(".footer > p");
-
-    if (openingTitle) {
-        openingTitle.textContent =
-            `${CONFIG.groomName} & ${CONFIG.brideName}`;
-    }
-
-    if (openingDate) {
-        openingDate.textContent =
-            CONFIG.displayDate;
-    }
-
-    if (invitationNames) {
-        invitationNames.textContent =
-            `${CONFIG.groomName} & ${CONFIG.brideName}`;
-    }
-
-    if (invitationDate) {
-        invitationDate.textContent =
-            CONFIG.displayDate;
-    }
-
-    if (heroDate) {
-        heroDate.textContent =
-            CONFIG.displayDate;
-    }
-
-    if (heroTime) {
-        heroTime.textContent =
-            CONFIG.displayDayTime;
-    }
-
-    if (footerTitle) {
-        footerTitle.textContent =
-            `${CONFIG.groomName} & ${CONFIG.brideName}`;
-    }
-
-    if (footerDate) {
-        footerDate.textContent =
-            CONFIG.displayDate;
-    }
-
-}
-
-
-/* =========================================================
-   OPENING SCREEN
-========================================================= */
-
-function setupOpeningScreen() {
+function initializeOpeningScreen() {
 
     const openingScreen =
         document.getElementById("openingScreen");
@@ -144,26 +96,42 @@ function setupOpeningScreen() {
     const mainContent =
         document.getElementById("mainContent");
 
-    if (!openingScreen || !openButton || !mainContent) {
+
+    if (!openingScreen || !openButton) {
         return;
     }
 
+
     document.body.classList.add("no-scroll");
+
+
+    if (mainContent) {
+        mainContent.style.opacity = "0";
+    }
+
 
     openButton.addEventListener("click", () => {
 
-        openingScreen.classList.add("hide");
-
-        mainContent.classList.add("show");
+        openingScreen.classList.add("is-hidden");
 
         document.body.classList.remove("no-scroll");
 
-        /*
-         * Start music only if the browser allows it.
-         * Usually browsers require a user interaction,
-         * and this button click qualifies as one.
-         */
-        tryStartMusic();
+
+        if (mainContent) {
+
+            mainContent.style.transition =
+                "opacity 1.2s ease";
+
+            mainContent.style.opacity = "1";
+
+        }
+
+
+        setTimeout(() => {
+
+            openingScreen.remove();
+
+        }, 1200);
 
     });
 
@@ -171,52 +139,193 @@ function setupOpeningScreen() {
 
 
 /* =========================================================
-   COUNTDOWN
+   05. SMOOTH NAVIGATION
 ========================================================= */
 
-function setupCountdown() {
+function initializeSmoothNavigation() {
+
+    const navigationLinks =
+        document.querySelectorAll(
+            'a[href^="#"]'
+        );
+
+
+    navigationLinks.forEach((link) => {
+
+        link.addEventListener("click", (event) => {
+
+            const targetId =
+                link.getAttribute("href");
+
+
+            if (!targetId || targetId === "#") {
+                return;
+            }
+
+
+            const target =
+                document.querySelector(targetId);
+
+
+            if (!target) {
+                return;
+            }
+
+
+            event.preventDefault();
+
+
+            const headerOffset = 10;
+
+
+            const targetPosition =
+                target.getBoundingClientRect().top +
+                window.scrollY -
+                headerOffset;
+
+
+            window.scrollTo({
+
+                top: targetPosition,
+
+                behavior: "smooth"
+
+            });
+
+        });
+
+    });
+
+}
+
+
+/* =========================================================
+   06. COUNTDOWN
+========================================================= */
+
+function initializeCountdown() {
+
+    const container =
+        document.getElementById(
+            "countdownContainer"
+        );
+
 
     const daysElement =
-        document.getElementById("countdownDays");
+        document.getElementById(
+            "countdownDays"
+        );
+
 
     const hoursElement =
-        document.getElementById("countdownHours");
+        document.getElementById(
+            "countdownHours"
+        );
+
 
     const minutesElement =
-        document.getElementById("countdownMinutes");
+        document.getElementById(
+            "countdownMinutes"
+        );
+
 
     const secondsElement =
-        document.getElementById("countdownSeconds");
+        document.getElementById(
+            "countdownSeconds"
+        );
+
 
     const finishedElement =
-        document.getElementById("countdownFinished");
+        document.getElementById(
+            "countdownFinished"
+        );
+
 
     if (
+        !container ||
         !daysElement ||
         !hoursElement ||
         !minutesElement ||
         !secondsElement
     ) {
+
         return;
+
     }
 
+
     const targetDate =
-        new Date(CONFIG.weddingDate).getTime();
+        new Date(
+            CONFIG.weddingDate
+        ).getTime();
+
+
+    let previousValues = {
+
+        days: null,
+
+        hours: null,
+
+        minutes: null,
+
+        seconds: null
+
+    };
+
+
+    function updateCountdownValue(
+        element,
+        value,
+        key
+    ) {
+
+        if (
+            previousValues[key] === value
+        ) {
+
+            return;
+
+        }
+
+
+        element.style.transform =
+            "translateY(-8px)";
+
+        element.style.opacity =
+            "0.3";
+
+
+        setTimeout(() => {
+
+            element.textContent = value;
+
+            element.style.transform =
+                "translateY(0)";
+
+            element.style.opacity =
+                "1";
+
+        }, 100);
+
+
+        previousValues[key] = value;
+
+    }
+
 
     function updateCountdown() {
 
         const now =
-            new Date().getTime();
+            Date.now();
 
-        const difference =
+
+        let difference =
             targetDate - now;
+
 
         if (difference <= 0) {
 
-            daysElement.textContent = "00";
-            hoursElement.textContent = "00";
-            minutesElement.textContent = "00";
-            secondsElement.textContent = "00";
+            container.hidden = true;
 
             if (finishedElement) {
                 finishedElement.hidden = false;
@@ -225,141 +334,226 @@ function setupCountdown() {
             clearInterval(countdownInterval);
 
             return;
+
         }
+
+
+        const totalSeconds =
+            Math.floor(
+                difference / 1000
+            );
+
 
         const days =
             Math.floor(
-                difference / (1000 * 60 * 60 * 24)
+                totalSeconds / 86400
             );
+
 
         const hours =
             Math.floor(
-                (difference % (1000 * 60 * 60 * 24))
-                / (1000 * 60 * 60)
+                (totalSeconds % 86400) / 3600
             );
+
 
         const minutes =
             Math.floor(
-                (difference % (1000 * 60 * 60))
-                / (1000 * 60)
+                (totalSeconds % 3600) / 60
             );
+
 
         const seconds =
-            Math.floor(
-                (difference % (1000 * 60))
-                / 1000
-            );
+            totalSeconds % 60;
 
-        daysElement.textContent =
-            String(days).padStart(2, "0");
 
-        hoursElement.textContent =
-            String(hours).padStart(2, "0");
+        updateCountdownValue(
+            daysElement,
+            String(days).padStart(2, "0"),
+            "days"
+        );
 
-        minutesElement.textContent =
-            String(minutes).padStart(2, "0");
 
-        secondsElement.textContent =
-            String(seconds).padStart(2, "0");
+        updateCountdownValue(
+            hoursElement,
+            String(hours).padStart(2, "0"),
+            "hours"
+        );
+
+
+        updateCountdownValue(
+            minutesElement,
+            String(minutes).padStart(2, "0"),
+            "minutes"
+        );
+
+
+        updateCountdownValue(
+            secondsElement,
+            String(seconds).padStart(2, "0"),
+            "seconds"
+        );
 
     }
 
+
     updateCountdown();
 
+
     const countdownInterval =
-        setInterval(updateCountdown, 1000);
+        setInterval(
+            updateCountdown,
+            1000
+        );
 
 }
 
 
 /* =========================================================
-   SCRATCH CARD
+   07. SCRATCH TO CELEBRATE
 ========================================================= */
 
-function setupScratchCard() {
-
-    const canvas =
-        document.getElementById("scratchCanvas");
+function initializeScratchCard() {
 
     const scratchCard =
-        document.getElementById("scratchCard");
+        document.getElementById(
+            "scratchCard"
+        );
+
+
+    const canvas =
+        document.getElementById(
+            "scratchCanvas"
+        );
+
 
     const revealButton =
-        document.getElementById("revealDateButton");
+        document.getElementById(
+            "revealDateButton"
+        );
 
-    if (!canvas || !scratchCard) {
+
+    if (
+        !scratchCard ||
+        !canvas
+    ) {
+
         return;
+
     }
+
 
     const context =
         canvas.getContext("2d");
 
-    if (!context) {
-        return;
+
+    let isDrawing = false;
+
+    let isRevealed = false;
+
+    let scratchedPixels = 0;
+
+    let lastPoint = null;
+
+
+    function getDevicePixelRatio() {
+
+        return Math.max(
+            1,
+            window.devicePixelRatio || 1
+        );
+
     }
 
-    let isScratching = false;
-
-    let scratchedPercentage = 0;
-
-    const scratchThreshold = 45;
-
-
-    /* -----------------------------------------------------
-       RESIZE CANVAS
-    ----------------------------------------------------- */
 
     function resizeCanvas() {
 
         const rect =
             scratchCard.getBoundingClientRect();
 
-        const devicePixelRatio =
-            window.devicePixelRatio || 1;
+
+        const ratio =
+            getDevicePixelRatio();
+
 
         canvas.width =
-            rect.width * devicePixelRatio;
+            Math.floor(
+                rect.width * ratio
+            );
+
 
         canvas.height =
-            rect.height * devicePixelRatio;
+            Math.floor(
+                rect.height * ratio
+            );
+
 
         canvas.style.width =
             `${rect.width}px`;
 
+
         canvas.style.height =
             `${rect.height}px`;
 
+
         context.setTransform(
-            devicePixelRatio,
+            ratio,
             0,
             0,
-            devicePixelRatio,
+            ratio,
             0,
             0
         );
+
 
         drawScratchSurface();
 
     }
 
 
-    /* -----------------------------------------------------
-       DRAW SCRATCH SURFACE
-    ----------------------------------------------------- */
-
     function drawScratchSurface() {
 
         const width =
             scratchCard.clientWidth;
 
+
         const height =
             scratchCard.clientHeight;
+
 
         context.globalCompositeOperation =
             "source-over";
 
+
+        const gradient =
+            context.createLinearGradient(
+                0,
+                0,
+                width,
+                height
+            );
+
+
+        gradient.addColorStop(
+            0,
+            "#c8aa78"
+        );
+
+
+        gradient.addColorStop(
+            0.45,
+            "#dfc99f"
+        );
+
+
+        gradient.addColorStop(
+            1,
+            "#a9895c"
+        );
+
+
         context.fillStyle =
-            "#c7a86b";
+            gradient;
+
 
         context.fillRect(
             0,
@@ -368,44 +562,83 @@ function setupScratchCard() {
             height
         );
 
-        /*
-         * Decorative scratch surface
-         */
+
+        /* Soft highlight */
+
+        const glow =
+            context.createRadialGradient(
+                width * 0.5,
+                height * 0.4,
+                10,
+                width * 0.5,
+                height * 0.4,
+                width * 0.65
+            );
+
+
+        glow.addColorStop(
+            0,
+            "rgba(255,255,255,0.28)"
+        );
+
+
+        glow.addColorStop(
+            1,
+            "rgba(255,255,255,0)"
+        );
+
+
         context.fillStyle =
-            "rgba(255,255,255,0.14)";
+            glow;
+
+
+        context.fillRect(
+            0,
+            0,
+            width,
+            height
+        );
+
+
+        /* Scratch surface pattern */
+
+        context.globalAlpha = 0.22;
 
         for (
             let x = -height;
             x < width + height;
-            x += 25
+            x += 18
         ) {
 
-            context.save();
+            context.beginPath();
 
-            context.translate(x, 0);
-
-            context.rotate(
-                -Math.PI / 4
+            context.moveTo(
+                x,
+                0
             );
 
-            context.fillRect(
-                0,
-                0,
-                8,
-                height * 2
+            context.lineTo(
+                x + height,
+                height
             );
 
-            context.restore();
+            context.strokeStyle =
+                "#ffffff";
+
+            context.lineWidth = 1;
+
+            context.stroke();
+
         }
 
-        context.globalCompositeOperation =
-            "source-over";
+
+        context.globalAlpha = 1;
+
+
+        /* Center text */
 
         context.fillStyle =
-            "#fffaf5";
-
-        context.font =
-            "600 12px Montserrat, sans-serif";
+            "rgba(255,255,255,0.92)";
 
         context.textAlign =
             "center";
@@ -413,99 +646,224 @@ function setupScratchCard() {
         context.textBaseline =
             "middle";
 
+
+        context.font =
+            "600 10px 'DM Sans', Arial, sans-serif";
+
+
         context.fillText(
             "SCRATCH TO REVEAL",
             width / 2,
-            height / 2
+            height / 2 - 7
+        );
+
+
+        context.font =
+            "18px 'Cormorant Garamond', Georgia, serif";
+
+
+        context.fillText(
+            "✦",
+            width / 2,
+            height / 2 + 22
         );
 
     }
 
-
-    /* -----------------------------------------------------
-       GET POINTER POSITION
-    ----------------------------------------------------- */
 
     function getPointerPosition(event) {
 
         const rect =
             canvas.getBoundingClientRect();
 
-        let clientX;
-        let clientY;
 
         if (event.touches && event.touches.length) {
 
-            clientX =
-                event.touches[0].clientX;
+            return {
 
-            clientY =
-                event.touches[0].clientY;
+                x:
+                    event.touches[0].clientX -
+                    rect.left,
 
-        } else {
+                y:
+                    event.touches[0].clientY -
+                    rect.top
 
-            clientX =
-                event.clientX;
-
-            clientY =
-                event.clientY;
+            };
 
         }
 
+
         return {
-            x: clientX - rect.left,
-            y: clientY - rect.top
+
+            x:
+                event.clientX -
+                rect.left,
+
+            y:
+                event.clientY -
+                rect.top
+
         };
 
     }
 
 
-    /* -----------------------------------------------------
-       SCRATCH
-    ----------------------------------------------------- */
+    function scratchAt(point) {
 
-    function scratch(event) {
+        context.save();
 
-        if (!isScratching) {
-            return;
-        }
-
-        event.preventDefault();
-
-        const position =
-            getPointerPosition(event);
 
         context.globalCompositeOperation =
             "destination-out";
 
-        context.beginPath();
 
-        context.arc(
-            position.x,
-            position.y,
-            25,
-            0,
-            Math.PI * 2
-        );
+        context.lineWidth = 48;
 
-        context.fill();
+        context.lineCap =
+            "round";
+
+        context.lineJoin =
+            "round";
+
+
+        if (lastPoint) {
+
+            context.beginPath();
+
+            context.moveTo(
+                lastPoint.x,
+                lastPoint.y
+            );
+
+            context.lineTo(
+                point.x,
+                point.y
+            );
+
+            context.stroke();
+
+        } else {
+
+            context.beginPath();
+
+            context.arc(
+                point.x,
+                point.y,
+                24,
+                0,
+                Math.PI * 2
+            );
+
+            context.fill();
+
+        }
+
+
+        context.restore();
+
+
+        lastPoint = point;
+
 
         checkScratchProgress();
 
     }
 
 
-    /* -----------------------------------------------------
-       CHECK SCRATCH PROGRESS
-    ----------------------------------------------------- */
+    function startScratch(event) {
+
+        if (isRevealed) {
+            return;
+        }
+
+
+        event.preventDefault();
+
+
+        isDrawing = true;
+
+        lastPoint =
+            getPointerPosition(event);
+
+
+        scratchAt(lastPoint);
+
+    }
+
+
+    function moveScratch(event) {
+
+        if (
+            !isDrawing ||
+            isRevealed
+        ) {
+
+            return;
+
+        }
+
+
+        event.preventDefault();
+
+
+        const point =
+            getPointerPosition(event);
+
+
+        scratchAt(point);
+
+    }
+
+
+    function stopScratch() {
+
+        isDrawing = false;
+
+        lastPoint = null;
+
+    }
+
 
     function checkScratchProgress() {
+
+        if (isRevealed) {
+            return;
+        }
+
+
+        scratchedPixels++;
+
+
+        /*
+         * Checking every scratch stroke would be
+         * unnecessarily expensive.
+         */
+
+        if (
+            scratchedPixels % 8 !== 0
+        ) {
+
+            return;
+
+        }
+
 
         const width =
             canvas.width;
 
+
         const height =
             canvas.height;
+
+
+        const sampleSize = 10;
+
+
+        let transparentPixels = 0;
+
+        let totalSamples = 0;
+
 
         const imageData =
             context.getImageData(
@@ -515,48 +873,74 @@ function setupScratchCard() {
                 height
             );
 
-        let transparentPixels = 0;
 
         /*
-         * Check every 16th pixel for better performance.
+         * Sample the canvas instead of checking
+         * every single pixel.
          */
+
         for (
-            let i = 3;
-            i < imageData.data.length;
-            i += 16
+            let y = 0;
+            y < height;
+            y += sampleSize
         ) {
 
-            if (imageData.data[i] === 0) {
-                transparentPixels++;
+            for (
+                let x = 0;
+                x < width;
+                x += sampleSize
+            ) {
+
+                const index =
+                    (
+                        y * width + x
+                    ) * 4;
+
+
+                if (
+                    imageData.data[index + 3] < 80
+                ) {
+
+                    transparentPixels++;
+
+                }
+
+
+                totalSamples++;
+
             }
 
         }
 
-        const totalSamples =
-            Math.floor(
-                imageData.data.length / 16
-            );
 
-        scratchedPercentage =
-            (transparentPixels / totalSamples) * 100;
+        const percentage =
+            transparentPixels /
+            totalSamples;
 
-        if (
-            scratchedPercentage >=
-            scratchThreshold
-        ) {
 
-            revealScratchCard();
+        if (percentage >= 0.48) {
+
+            revealScratch();
 
         }
 
     }
 
 
-    /* -----------------------------------------------------
-       REVEAL CARD
-    ----------------------------------------------------- */
+    function revealScratch() {
 
-    function revealScratchCard() {
+        if (isRevealed) {
+            return;
+        }
+
+
+        isRevealed = true;
+
+
+        scratchCard.classList.add(
+            "revealed"
+        );
+
 
         context.clearRect(
             0,
@@ -565,121 +949,266 @@ function setupScratchCard() {
             canvas.height
         );
 
-        canvas.style.pointerEvents =
-            "none";
 
         if (revealButton) {
-            revealButton.textContent =
-                "Date Revealed";
+
+            revealButton.innerHTML =
+                "<span>Celebration Revealed</span><i>✦</i>";
+
+            revealButton.disabled = true;
+
+            revealButton.style.opacity =
+                "0.65";
+
+            revealButton.style.cursor =
+                "default";
+
         }
+
+
+        createCelebrationEffect();
 
     }
 
 
-    /* -----------------------------------------------------
-       POINTER EVENTS
-    ----------------------------------------------------- */
+    function revealWithButton() {
+
+        revealScratch();
+
+    }
+
 
     canvas.addEventListener(
         "mousedown",
-        () => {
-            isScratching = true;
-        }
+        startScratch
     );
+
 
     canvas.addEventListener(
         "mousemove",
-        scratch
+        moveScratch
     );
+
 
     window.addEventListener(
         "mouseup",
-        () => {
-            isScratching = false;
-        }
+        stopScratch
     );
 
-
-    /* -----------------------------------------------------
-       TOUCH EVENTS
-    ----------------------------------------------------- */
 
     canvas.addEventListener(
         "touchstart",
-        (event) => {
-
-            isScratching = true;
-
-            event.preventDefault();
-
-        },
+        startScratch,
         {
             passive: false
         }
     );
+
 
     canvas.addEventListener(
         "touchmove",
-        scratch,
+        moveScratch,
         {
             passive: false
         }
     );
 
+
     canvas.addEventListener(
         "touchend",
-        () => {
-            isScratching = false;
-        }
+        stopScratch
     );
 
-
-    /* -----------------------------------------------------
-       REVEAL BUTTON
-    ----------------------------------------------------- */
 
     if (revealButton) {
 
         revealButton.addEventListener(
             "click",
-            () => {
-
-                revealScratchCard();
-
-            }
+            revealWithButton
         );
 
     }
 
-
-    /* -----------------------------------------------------
-       INITIALIZE
-    ----------------------------------------------------- */
-
-    resizeCanvas();
 
     window.addEventListener(
         "resize",
         resizeCanvas
     );
 
+
+    resizeCanvas();
+
 }
 
 
 /* =========================================================
-   GALLERY
+   08. CELEBRATION EFFECT
 ========================================================= */
 
-function setupGallery() {
+function createCelebrationEffect() {
 
-    const galleryGrid =
-        document.getElementById("galleryGrid");
+    const colors = [
+        "#b79662",
+        "#d8bd8c",
+        "#b9827a",
+        "#ead8d3",
+        "#ffffff"
+    ];
+
+
+    const container =
+        document.createElement("div");
+
+
+    container.className =
+        "celebration-particles";
+
+
+    container.style.position =
+        "fixed";
+
+    container.style.inset = "0";
+
+    container.style.pointerEvents =
+        "none";
+
+    container.style.zIndex =
+        "9998";
+
+    container.style.overflow =
+        "hidden";
+
+
+    document.body.appendChild(
+        container
+    );
+
+
+    for (
+        let i = 0;
+        i < 55;
+        i++
+    ) {
+
+        const particle =
+            document.createElement("span");
+
+
+        particle.textContent =
+            i % 3 === 0
+                ? "✦"
+                : "•";
+
+
+        particle.style.position =
+            "absolute";
+
+
+        particle.style.left =
+            `${Math.random() * 100}%`;
+
+
+        particle.style.top =
+            `${35 + Math.random() * 15}%`;
+
+
+        particle.style.color =
+            colors[
+            Math.floor(
+                Math.random() *
+                colors.length
+            )
+            ];
+
+
+        particle.style.fontSize =
+            `${7 + Math.random() * 12}px`;
+
+
+        particle.style.opacity =
+            "0";
+
+
+        particle.style.transform =
+            "translateY(0) rotate(0deg)";
+
+
+        particle.style.transition =
+            `transform ${1.5 + Math.random() * 1.8
+            }s cubic-bezier(.2,.8,.3,1),
+             opacity .25s ease`;
+
+
+        container.appendChild(
+            particle
+        );
+
+
+        requestAnimationFrame(() => {
+
+            particle.style.opacity =
+                "0.9";
+
+
+            particle.style.transform =
+                `translate(
+                    ${(Math.random() - 0.5) * 250}px,
+                    ${180 + Math.random() * 420}px
+                )
+                rotate(
+                    ${Math.random() * 720 - 360}deg
+                )`;
+
+        });
+
+    }
+
+
+    setTimeout(() => {
+
+        container.style.opacity =
+            "0";
+
+        container.style.transition =
+            "opacity .6s ease";
+
+    }, 2200);
+
+
+    setTimeout(() => {
+
+        container.remove();
+
+    }, 3000);
+
+}
+
+
+/* =========================================================
+   09. GALLERY
+========================================================= */
+
+function initializeGallery() {
 
     const photoInput =
-        document.getElementById("photoInput");
+        document.getElementById(
+            "photoInput"
+        );
 
-    if (!galleryGrid || !photoInput) {
+
+    const galleryGrid =
+        document.querySelector(
+            ".gallery-grid"
+        );
+
+
+    if (
+        !photoInput ||
+        !galleryGrid
+    ) {
+
         return;
+
     }
 
 
@@ -687,63 +1216,121 @@ function setupGallery() {
         "change",
         (event) => {
 
-            const files =
-                Array.from(
-                    event.target.files || []
-                );
+            const file =
+                event.target.files[0];
 
-            if (!files.length) {
+
+            if (!file) {
                 return;
             }
 
-            files.forEach(
-                (file) => {
 
-                    if (
-                        !file.type.startsWith(
-                            "image/"
-                        )
-                    ) {
-                        return;
-                    }
+            if (
+                !file.type.startsWith(
+                    "image/"
+                )
+            ) {
 
-                    const imageURL =
-                        URL.createObjectURL(file);
+                alert(
+                    "Please choose a valid image."
+                );
 
-                    const galleryItem =
-                        document.createElement("div");
+                return;
 
-                    galleryItem.className =
-                        "gallery-item";
+            }
 
-                    const image =
-                        document.createElement("img");
 
-                    image.src =
-                        imageURL;
+            const reader =
+                new FileReader();
 
-                    image.alt =
-                        "Wedding memory";
 
-                    image.loading =
-                        "lazy";
+            reader.onload = (loadEvent) => {
 
-                    galleryItem.appendChild(
-                        image
+                const item =
+                    document.createElement(
+                        "div"
                     );
 
-                    galleryGrid.appendChild(
-                        galleryItem
+
+                item.className =
+                    "gallery-item";
+
+
+                const image =
+                    document.createElement(
+                        "img"
                     );
 
-                }
-            );
 
-            /*
-             * Reset input so the same image can
-             * be selected again later.
-             */
-            photoInput.value = "";
+                image.src =
+                    loadEvent.target.result;
+
+
+                image.alt =
+                    "Added wedding photo";
+
+
+                const overlay =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                overlay.className =
+                    "gallery-overlay";
+
+
+                const number =
+                    document.createElement(
+                        "span"
+                    );
+
+
+                const existingItems =
+                    galleryGrid.querySelectorAll(
+                        ".gallery-item"
+                    );
+
+
+                number.textContent =
+                    String(
+                        existingItems.length + 1
+                    ).padStart(2, "0");
+
+
+                overlay.appendChild(
+                    number
+                );
+
+
+                item.appendChild(
+                    image
+                );
+
+
+                item.appendChild(
+                    overlay
+                );
+
+
+                const uploadLabel =
+                    galleryGrid.querySelector(
+                        ".gallery-upload"
+                    );
+
+
+                galleryGrid.insertBefore(
+                    item,
+                    uploadLabel
+                );
+
+
+                photoInput.value = "";
+
+            };
+
+
+            reader.readAsDataURL(file);
 
         }
     );
@@ -752,29 +1339,43 @@ function setupGallery() {
 
 
 /* =========================================================
-   RSVP
+   10. RSVP
 ========================================================= */
 
-function setupRSVP() {
+function initializeRSVP() {
 
     const form =
-        document.getElementById("rsvpForm");
+        document.getElementById(
+            "rsvpForm"
+        );
 
-    const guestName =
-        document.getElementById("guestName");
-
-    const guestCount =
-        document.getElementById("guestCount");
 
     const status =
-        document.getElementById("rsvpStatus");
+        document.getElementById(
+            "rsvpStatus"
+        );
+
+
+    const nameInput =
+        document.getElementById(
+            "guestName"
+        );
+
+
+    const guestCount =
+        document.getElementById(
+            "guestCount"
+        );
+
 
     if (
         !form ||
-        !guestName ||
+        !nameInput ||
         !guestCount
     ) {
+
         return;
+
     }
 
 
@@ -784,8 +1385,10 @@ function setupRSVP() {
 
             event.preventDefault();
 
+
             const name =
-                guestName.value.trim();
+                nameInput.value.trim();
+
 
             const numberOfGuests =
                 guestCount.value;
@@ -794,10 +1397,11 @@ function setupRSVP() {
             if (!name) {
 
                 showRSVPStatus(
+                    status,
                     "Please enter your name."
                 );
 
-                guestName.focus();
+                nameInput.focus();
 
                 return;
 
@@ -807,6 +1411,7 @@ function setupRSVP() {
             if (!numberOfGuests) {
 
                 showRSVPStatus(
+                    status,
                     "Please select the number of guests."
                 );
 
@@ -817,9 +1422,6 @@ function setupRSVP() {
             }
 
 
-            /*
-             * Create WhatsApp RSVP message.
-             */
             const message =
                 `Wedding RSVP
 
@@ -828,77 +1430,92 @@ Number of Guests: ${numberOfGuests}
 
 Wedding Date: ${CONFIG.displayDate}`;
 
+
             const whatsappURL =
                 `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
 
 
-            /*
-             * Open WhatsApp.
-             */
-            window.open(
-                whatsappURL,
-                "_blank",
-                "noopener,noreferrer"
-            );
-
-
             showRSVPStatus(
-                "Thank you! Your RSVP message is ready to send on WhatsApp."
+                status,
+                "Opening WhatsApp..."
             );
 
 
-            /*
-             * Reset form after submission.
-             */
-            form.reset();
+            setTimeout(() => {
+
+                window.open(
+                    whatsappURL,
+                    "_blank",
+                    "noopener,noreferrer"
+                );
+
+            }, 400);
 
         }
     );
-
-
-    function showRSVPStatus(message) {
-
-        if (!status) {
-            return;
-        }
-
-        status.textContent =
-            message;
-
-    }
 
 }
 
 
 /* =========================================================
-   MUSIC
+   11. RSVP STATUS
 ========================================================= */
 
-function setupMusic() {
+function showRSVPStatus(
+    element,
+    message
+) {
 
-    const music =
-        document.getElementById("weddingMusic");
-
-    const musicButton =
-        document.getElementById("musicButton");
-
-    if (!music || !musicButton) {
+    if (!element) {
         return;
     }
 
-    /*
-     * Make sure the configured music file
-     * is used.
-     */
-    const source =
-        music.querySelector("source");
 
-    if (source) {
+    element.textContent =
+        message;
 
-        source.src =
-            CONFIG.musicFile;
 
-        music.load();
+    element.style.opacity =
+        "0";
+
+
+    requestAnimationFrame(() => {
+
+        element.style.transition =
+            "opacity .35s ease";
+
+        element.style.opacity =
+            "1";
+
+    });
+
+}
+
+
+/* =========================================================
+   12. MUSIC
+========================================================= */
+
+function initializeMusic() {
+
+    const music =
+        document.getElementById(
+            "weddingMusic"
+        );
+
+
+    const musicButton =
+        document.getElementById(
+            "musicButton"
+        );
+
+
+    if (
+        !music ||
+        !musicButton
+    ) {
+
+        return;
 
     }
 
@@ -907,18 +1524,34 @@ function setupMusic() {
         "click",
         async () => {
 
-            if (music.paused) {
+            if (
+                music.paused
+            ) {
 
-                await playMusic(
-                    music,
-                    musicButton
-                );
+                try {
+
+                    await music.play();
+
+                    setMusicButtonState(
+                        musicButton,
+                        true
+                    );
+
+                } catch (error) {
+
+                    showMusicMessage(
+                        musicButton
+                    );
+
+                }
 
             } else {
 
-                pauseMusic(
-                    music,
-                    musicButton
+                music.pause();
+
+                setMusicButtonState(
+                    musicButton,
+                    false
                 );
 
             }
@@ -931,21 +1564,9 @@ function setupMusic() {
         "play",
         () => {
 
-            musicButton.classList.add(
-                "playing"
-            );
-
-            musicButton.textContent =
-                "❚❚";
-
-            musicButton.setAttribute(
-                "aria-label",
-                "Pause wedding music"
-            );
-
-            musicButton.setAttribute(
-                "title",
-                "Pause Music"
+            setMusicButtonState(
+                musicButton,
+                true
             );
 
         }
@@ -956,21 +1577,9 @@ function setupMusic() {
         "pause",
         () => {
 
-            musicButton.classList.remove(
-                "playing"
-            );
-
-            musicButton.textContent =
-                "♪";
-
-            musicButton.setAttribute(
-                "aria-label",
-                "Play wedding music"
-            );
-
-            musicButton.setAttribute(
-                "title",
-                "Play Music"
+            setMusicButtonState(
+                musicButton,
+                false
             );
 
         }
@@ -980,106 +1589,119 @@ function setupMusic() {
 
 
 /* =========================================================
-   TRY START MUSIC
+   13. MUSIC BUTTON STATE
 ========================================================= */
 
-async function tryStartMusic() {
+function setMusicButtonState(
+    button,
+    playing
+) {
 
-    const music =
-        document.getElementById("weddingMusic");
+    if (playing) {
 
-    const musicButton =
-        document.getElementById("musicButton");
+        button.classList.add(
+            "is-playing"
+        );
 
-    if (!music || !musicButton) {
+        button.textContent = "Ⅱ";
+
+        button.setAttribute(
+            "aria-label",
+            "Pause wedding music"
+        );
+
+        button.setAttribute(
+            "title",
+            "Pause Music"
+        );
+
+    } else {
+
+        button.classList.remove(
+            "is-playing"
+        );
+
+        button.textContent = "♪";
+
+        button.setAttribute(
+            "aria-label",
+            "Play wedding music"
+        );
+
+        button.setAttribute(
+            "title",
+            "Play Music"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   14. MUSIC ERROR MESSAGE
+========================================================= */
+
+function showMusicMessage(
+    button
+) {
+
+    const originalTitle =
+        button.getAttribute(
+            "title"
+        );
+
+
+    button.setAttribute(
+        "title",
+        "Add music.mp3 to the website folder"
+    );
+
+
+    setTimeout(() => {
+
+        button.setAttribute(
+            "title",
+            originalTitle || "Play Music"
+        );
+
+    }, 3000);
+
+}
+
+
+/* =========================================================
+   15. SCROLL REVEAL
+========================================================= */
+
+function initializeScrollReveal() {
+
+    const elements =
+        document.querySelectorAll(
+            `
+            .section-heading,
+            .invitation-card,
+            .scratch-card,
+            .events-grid,
+            .countdown-container,
+            .story-layout,
+            .gallery-grid,
+            .venue-card,
+            .rsvp-wrapper,
+            .final-inner
+            `
+        );
+
+
+    if (!elements.length) {
         return;
     }
 
-    try {
 
-        await music.play();
+    elements.forEach(
+        (element) => {
 
-    } catch (error) {
-
-        /*
-         * Browser may block automatic playback.
-         * User can use the music button instead.
-         */
-
-        musicButton.classList.remove(
-            "playing"
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   PLAY MUSIC
-========================================================= */
-
-async function playMusic(
-    music,
-    musicButton
-) {
-
-    try {
-
-        await music.play();
-
-    } catch (error) {
-
-        console.warn(
-            "Music could not be played:",
-            error
-        );
-
-        if (musicButton) {
-
-            musicButton.classList.remove(
-                "playing"
-            );
-
-        }
-
-    }
-
-}
-
-
-/* =========================================================
-   PAUSE MUSIC
-========================================================= */
-
-function pauseMusic(
-    music,
-    musicButton
-) {
-
-    music.pause();
-
-}
-
-
-/* =========================================================
-   SCROLL REVEAL
-========================================================= */
-
-function setupScrollReveal() {
-
-    /*
-     * Add reveal class to major sections.
-     */
-    const sections =
-        document.querySelectorAll(
-            ".section-container"
-        );
-
-    sections.forEach(
-        (section) => {
-
-            section.classList.add(
+            element.classList.add(
                 "reveal"
             );
 
@@ -1087,12 +1709,28 @@ function setupScrollReveal() {
     );
 
 
-    /*
-     * Intersection Observer
-     */
+    if (
+        !("IntersectionObserver" in window)
+    ) {
+
+        elements.forEach(
+            (element) => {
+
+                element.classList.add(
+                    "revealed"
+                );
+
+            }
+        );
+
+        return;
+
+    }
+
+
     const observer =
         new IntersectionObserver(
-            (entries) => {
+            (entries, observerInstance) => {
 
                 entries.forEach(
                     (entry) => {
@@ -1102,10 +1740,11 @@ function setupScrollReveal() {
                         ) {
 
                             entry.target.classList.add(
-                                "active"
+                                "revealed"
                             );
 
-                            observer.unobserve(
+
+                            observerInstance.unobserve(
                                 entry.target
                             );
 
@@ -1116,16 +1755,19 @@ function setupScrollReveal() {
 
             },
             {
-                threshold: 0.12
+                threshold: 0.12,
+
+                rootMargin:
+                    "0px 0px -60px 0px"
             }
         );
 
 
-    sections.forEach(
-        (section) => {
+    elements.forEach(
+        (element) => {
 
             observer.observe(
-                section
+                element
             );
 
         }
@@ -1135,42 +1777,48 @@ function setupScrollReveal() {
 
 
 /* =========================================================
-   OPTIONAL: UPDATE SCRATCH CARD DATE
-========================================================= */
-
-function updateScratchCardDate() {
-
-    const dateElement =
-        document.querySelector(
-            ".revealed-date p"
-        );
-
-    if (dateElement) {
-
-        dateElement.textContent =
-            CONFIG.displayDate;
-
-    }
-
-}
-
-
-/* =========================================================
-   OPTIONAL: UPDATE PAGE TITLE
+   16. PAGE TITLE
 ========================================================= */
 
 function updatePageTitle() {
 
     document.title =
-        `${CONFIG.groomName} & ${CONFIG.brideName} | Wedding Invitation`;
+        `${CONFIG.groomName} & ${CONFIG.brideName} — Wedding Invitation`;
 
 }
 
 
 /* =========================================================
-   RUN OPTIONAL CONFIG UPDATES
+   17. PREVENT IMAGE DRAGGING
 ========================================================= */
 
-updateScratchCardDate();
+document.addEventListener(
+    "dragstart",
+    (event) => {
 
-updatePageTitle();
+        if (
+            event.target.tagName === "IMG"
+        ) {
+
+            event.preventDefault();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   18. WINDOW LOAD
+========================================================= */
+
+window.addEventListener(
+    "load",
+    () => {
+
+        document.documentElement.classList.add(
+            "page-loaded"
+        );
+
+    }
+);
