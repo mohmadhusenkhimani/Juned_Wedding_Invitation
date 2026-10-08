@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta name="description" content="Juned & Yasmin Wedding Invitation" />
+
+    <title>Juned & Yasmin | Wedding Invitation</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <!-- =========================================================
+         OPENING SCREEN
+    ========================================================== -->
+    <div id="openingScreen" class="opening-screen">
+      <div class="opening-content">
+        <p class="opening-small-text">Together with their families</p>
+
+        <div class="opening-monogram">J <span>&amp;</span> Y</div>
+
+        <h1 class="opening-title">Juned &amp; Yasmin</h1>
+
+        <p class="opening-date">29 November 2026</p>
+
+        <button
+          id="openInvitationButton"
+          class="gold-button opening-button"
+          type="button"
+        >
+          Open Invitation
+        </button>
+      </div>
+    </div>
+
+    <!-- =========================================================
+         MAIN WEBSITE
+    ========================================================== -->
+    <main id="mainContent" class="main-content">
+      <!-- =====================================================
+             HERO SECTION
+        ====================================================== -->
+      <section id="home" class="hero-section">
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+          <p class="hero-small-text">The Wedding Celebration Of</p>
+
+          <div class="hero-monogram">J <span>&amp;</span> Y</div>
+
+          <h1 class="hero-title">
+            Juned
+            <span>&amp;</span>
+            Yasmin
+          </h1>
+
+          <div class="hero-divider">
+            <span></span>
+            <i>✦</i>
+            <span></span>
+          </div>
+
+          <p class="hero-date">29 November 2026</p>
+
+          <p class="hero-time">Sunday • 10:00 PM</p>
+
+          <a href="#events" class="gold-button hero-button">
+            View Celebration
+          </a>
+        </div>
+      </section>
+
+      <!-- =====================================================
+             INTRODUCTION / INVITATION
+        ====================================================== -->
+      <section id="invitation" class="invitation-section section-padding">
+        <div class="section-container">
+          <p class="section-eyebrow">With Love &amp; Blessings</p>
+
+          <h2 class="section-title">You Are Invited</h2>
+
+          <div class="gold-divider">
+            <span></span>
+            <i>♡</i>
+            <span></span>
+          </div>
+
+          <p class="invitation-text">
+            With the blessings of our families, we warmly invite you to join us
+            as we celebrate the beautiful beginning of our new journey together.
+          </p>
+
+          <p class="invitation-names">Juned &amp; Yasmin</p>
+
+          <p class="invitation-date">29 November 2026</p>
+        </div>
+      </section>
+
+      <!-- =====================================================
+             SCRATCH CARD
+        ====================================================== -->
+      <section id="dateReveal" class="scratch-section section-padding">
+        <div class="section-container">
+          <p class="section-eyebrow">A Little Surprise</p>
+
+          <h2 class="section-title">Reveal Our Date</h2>
+
+          <div class="gold-divider">
+            <span></span>
+            <i>✦</i>
+            <span></span>
+          </div>
+
+          <div id="scratchCard" class="scratch-card">
+            <div class="scratch-card-content">
+              <p class="scratch-small">Our Special Day</p>
+
+              <div class="revealed-date">
+                <h3>Juned &amp; Yasmin</h3>
+
+                <p>29 November 2026</p>
+              </div>
+            </div>
+
+            <canvas id="scratchCanvas" class="scratch-canvas"></canvas>
+          </div>
+
+          <button id="revealDateButton" class="gold-button" type="button">
+            Reveal Date
+          </button>
+        </div>
+      </section>
+
+      <!-- =====================================================
+             EVENTS
+        ====================================================== -->
+      <section id="events" class="events-section section-padding">
+        <div class="section-container">
+          <p class="section-eyebrow">Save The Date</p>
+
+          <h2 class="section-title">Wedding Events</h2>
+
+          <div class="gold-divider">
+            <span></span>
+            <i>✦</i>
+            <span></span>
+          </div>
+
+          <p class="section-description">
+            Join us for these special moments as we celebrate love, family and
+            togetherness.
+          </p>
+
+          <div class="events-grid">
+            <!-- EVENT 1 -->
+            <article class="event-card">
+              <div class="event-icon">✦</div>
+
+              <span class="small-label"> Celebration </span>
+
+              <h3>Eating</h3>
+
+              <p class="event-time">2:00 PM</p>
+
+              <div class="event-divider"></div>
+
+              <p class="event-venue">
+                Join us for a beautiful family meal and a joyful gathering.
+              </p>
+            </article>
+
+            <!-- EVENT 2 -->
+            <article class="event-card">
+              <div class="event-icon">♡</div>
+
+              <span class="small-label"> Ceremony </span>
+
+              <h3>Haldi</h3>
+
+              <p class="event-time">6:00 PM</p>
+
+              <div class="event-divider"></div>
+
+              <p class="event-venue">
+                A joyful Haldi celebration surrounded by family and loved ones.
+              </p>
+            </article>
+
+            <!-- EVENT 3 -->
+            <article class="event-card">
+              <div class="event-icon">✦</div>
+
+              <span class="small-label"> Wedding Procession </span>
+
+              <h3>Barat</h3>
+
+              <p class="event-time">10:00 PM</p>
+
+              <div class="event-divider"></div>
+
+              <p class="event-venue">
+                Let’s celebrate the grand wedding procession together.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================
+             COUNTDOWN
+        ====================================================== -->
+      <section id="countdown" class="countdown-section section-padding">
+        <div class="section-container">
+          <p class="section-eyebrow">Counting The Moments</p>
+
+          <h2 class="section-title">Until We Say “I Do”</h2>
+
+          <div class="gold-divider">
+            <span></span>
+            <i>♡</i>
+            <span></span>
+          </div>
+
+          <div id="countdownContainer" class="countdown-container">
+            <div class="countdown-item">
+              <div id="countdownDays" class="countdown-number">00</div>
+
+              <span class="countdown-label"> Days </span>
+            </div>
+
+            <div class="countdown-separator">:</div>
+
+            <div class="countdown-item">
+              <div id="countdownHours" class="countdown-number">00</div>
+
+              <span class="countdown-label"> Hours </span>
+            </div>
+
+            <div class="countdown-separator">:</div>
+
+            <div class="countdown-item">
+              <div id="countdownMinutes" class="countdown-number">00</div>
+
+              <span class="countdown-label"> Minutes </span>
+            </div>
+
+            <div class="countdown-separator">:</div>
+
+            <div class="countdown-item">
+              <div id="countdownSeconds" class="countdown-number">00</div>
+
+              <span class="countdown-label"> Seconds </span>
+            </div>
+          </div>
+
+          <p id="countdownFinished" class="countdown-finished" hidden>
+            See you there! ♡
+          </p>
+        </div>
+      </section>
+
+      <!-- =====================================================
+             OUR STORY
+        ====================================================== -->
+      <section id="story" class="story-section section-padding">
+        <div class="section-container">
+          <p class="section-eyebrow">Our Journey</p>
+
+          <h2 class="section-title">Two Hearts, One Journey</h2>
+
+          <div class="gold-divider">
+            <span></span>
+            <i>♡</i>
+            <span></span>
+          </div>
+
+          <div class="story-container">
+            <div class="story-image">
+              <img
+                src="couple-photo.png"
+                alt="Juned and Yasmin"
+                loading="lazy"
+              />
+            </div>
+
+            <div class="story-content">
+              <p class="story-small">Our Story</p>
+
+              <h3>A Beautiful Beginning</h3>
+
+              <p>
+                Every love story is special, but ours is one we are grateful to
+                share with the people who mean the most to us.
+              </p>
+
+              <p>
+                As we begin this beautiful new chapter, your presence and
+                blessings will make our celebration even more meaningful.
+              </p>
+
+              <div class="story-signature">Juned &amp; Yasmin</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================
+             GALLERY
+        ====================================================== -->
+      <section id="gallery" class="gallery-section section-padding">
+        <div class="section-container">
+          <p class="section-eyebrow">Memories</p>
+
+          <h2 class="section-title">Our Gallery</h2>
+
+          <div class="gold-divider">
+            <span></span>
+            <i>✦</i>
+            <span></span>
+          </div>
+
+          <p class="section-description">
+            Add your favorite memories and moments here.
+          </p>
+
+          <div id="galleryGrid" class="gallery-grid">
+            <div class="gallery-item">
+              <img
+                src="couple-photo.png"
+                alt="Juned and Yasmin"
+                loading="lazy"
+              />
+            </div>
+
+            <div class="gallery-item">
+              <img src="images2.jpeg" alt="Juned and Yasmin" loading="lazy" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================
+             VENUE
+        ====================================================== -->
+      <section id="venue" class="venue-section section-padding">
+        <div class="section-container">
+          <p class="section-eyebrow">Join Us</p>
+
+          <h2 class="section-title">Wedding Venue</h2>
+
+          <div class="gold-divider">
+            <span></span>
+            <i>♡</i>
+            <span></span>
+          </div>
+
+          <div class="venue-card">
+            <div class="venue-icon">✦</div>
+
+            <h3>Wedding Celebration</h3>
+
+            <p>
+              We look forward to celebrating this beautiful occasion with you.
+            </p>
+
+            <div class="venue-details">
+              <div class="venue-detail">
+                <span>DATE</span>
+                <strong> 29 November 2026 </strong>
+              </div>
+
+              <div class="venue-detail">
+                <span>CELEBRATION</span>
+                <strong> Eating • Haldi • Barat </strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================
+             RSVP
+        ====================================================== -->
+      <section id="rsvp" class="rsvp-section section-padding">
+        <div class="section-container">
+          <p class="section-eyebrow">Kindly Respond</p>
+
+          <h2 class="section-title">RSVP</h2>
+
+          <div class="gold-divider">
+            <span></span>
+            <i>♡</i>
+            <span></span>
+          </div>
+
+          <p class="section-description">
+            Please share your name and number of guests so we can make the
+            arrangements accordingly.
+          </p>
+
+          <form id="rsvpForm" class="rsvp-form">
+            <!-- Guest Name -->
+            <div class="form-group">
+              <label for="guestName"> Your Name </label>
+
+              <input
+                id="guestName"
+                name="guestName"
+                type="text"
+                placeholder="Enter your name"
+                autocomplete="name"
+                required
+              />
+            </div>
+
+            <!-- Number of Guests -->
+            <div class="form-group">
+              <label for="guestCount"> Number of Guests </label>
+
+              <select id="guestCount" name="guestCount" required>
+                <option value="" selected disabled>
+                  Select number of guests
+                </option>
+
+                <option value="1">1 Guest</option>
+
+                <option value="2">2 Guests</option>
+
+                <option value="3">3 Guests</option>
+
+                <option value="4">4 Guests</option>
+
+                <option value="5">5 Guests</option>
+
+                <option value="6+">6+ Guests</option>
+              </select>
+            </div>
+
+            <button type="submit" class="gold-button rsvp-button">
+              Send RSVP
+            </button>
+          </form>
+
+          <p id="rsvpStatus" class="rsvp-status" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <!-- =====================================================
+             FOOTER
+        ====================================================== -->
+      <footer class="footer">
+        <div class="footer-monogram">J <span>&amp;</span> Y</div>
+
+        <h2>Juned &amp; Yasmin</h2>
+
+        <p>29 November 2026</p>
+
+        <div class="footer-divider">
+          <span></span>
+          <i>♡</i>
+          <span></span>
+        </div>
+
+        <p class="footer-message">With love, laughter and blessings.</p>
+      </footer>
+    </main>
+
+    <!-- =========================================================
+         MUSIC
+    ========================================================== -->
+
+    <audio id="weddingMusic" loop preload="none">
+      <source src="music.mp3" type="audio/mpeg" />
+    </audio>
+
+    <button
+      id="musicButton"
+      class="music-button"
+      type="button"
+      aria-label="Play wedding music"
+      title="Play Music"
+    >
+      ♪
+    </button>
+
+    <!-- Main JavaScript -->
+    <script src="script.js"></script>
+  </body>
+</html>
