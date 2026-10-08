@@ -1495,98 +1495,65 @@ function showRSVPStatus(
 /* =========================================================
    12. MUSIC
 ========================================================= */
-
 function initializeMusic() {
+    const music = document.getElementById("weddingMusic");
+    const musicButton = document.getElementById("musicButton");
+    const openButton = document.getElementById("openInvitationButton");
 
-    const music =
-        document.getElementById(
-            "weddingMusic"
-        );
+    if (!music) return;
 
+    music.volume = 0.6;
 
-    const musicButton =
-        document.getElementById(
-            "musicButton"
-        );
-
-
-    if (
-        !music ||
-        !musicButton
-    ) {
-
-        return;
-
+    function playMusic() {
+        music.play()
+            .then(() => {
+                if (musicButton) {
+                    musicButton.classList.add("playing");
+                    musicButton.textContent = "♫";
+                    musicButton.setAttribute("aria-label", "Pause wedding music");
+                    musicButton.setAttribute("title", "Pause Music");
+                }
+            })
+            .catch(() => {
+                // Browser blocked playback
+                console.log("Music autoplay was blocked by the browser.");
+            });
     }
 
+    function pauseMusic() {
+        music.pause();
 
-    musicButton.addEventListener(
-        "click",
-        async () => {
+        if (musicButton) {
+            musicButton.classList.remove("playing");
+            musicButton.textContent = "♪";
+            musicButton.setAttribute("aria-label", "Play wedding music");
+            musicButton.setAttribute("title", "Play Music");
+        }
+    }
 
-            if (
-                music.paused
-            ) {
+    // Start music when invitation is opened
+    if (openButton) {
+        openButton.addEventListener("click", () => {
+            playMusic();
+        });
+    }
 
-                try {
-
-                    await music.play();
-
-                    setMusicButtonState(
-                        musicButton,
-                        true
-                    );
-
-                } catch (error) {
-
-                    showMusicMessage(
-                        musicButton
-                    );
-
-                }
-
+    // Music button controls
+    if (musicButton) {
+        musicButton.addEventListener("click", () => {
+            if (music.paused) {
+                playMusic();
             } else {
-
-                music.pause();
-
-                setMusicButtonState(
-                    musicButton,
-                    false
-                );
-
+                pauseMusic();
             }
+        });
+    }
 
-        }
-    );
-
-
-    music.addEventListener(
-        "play",
-        () => {
-
-            setMusicButtonState(
-                musicButton,
-                true
-            );
-
-        }
-    );
-
-
-    music.addEventListener(
-        "pause",
-        () => {
-
-            setMusicButtonState(
-                musicButton,
-                false
-            );
-
-        }
-    );
-
+    music.addEventListener("ended", () => {
+        music.currentTime = 0;
+        playMusic();
+    });
 }
-
 
 /* =========================================================
    13. MUSIC BUTTON STATE
